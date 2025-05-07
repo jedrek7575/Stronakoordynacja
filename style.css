@@ -411,22 +411,126 @@ color: rgb(112, 112, 112);
 }
 
 .galeria {
-  height: 100vh;
+  height: auto;
   width: 100%;
+  display: block;
   position: relative;
-  display: inline-block;
+  background-color: black;
+
+}
+
+.gl {
+  float: left;
+  width: 50%;
+  height: 120vh;
+  background-color: black;
+  padding: 2%;
+  
 }
 
 .galeria1 {
-  width: 20vw;
+  width: 100%;
   height: auto;
+  position: relative;
+  display: flex;
+  justify-content: right;
+  margin-bottom: 5%;
 }
 
 .z1 {
-  width: 20vw;
+  width: 80%;
+  height: auto;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 1%;
+  transition: 0.3s ease-in-out;
 }
 
+.z1:hover {
+  scale: 110%;
+  z-index: 1000;
+}
+
+.z1t {
+  color: white;
+  position: absolute;
+  z-index: 1001;
+  bottom: 0;
+  padding: 0;
+  margin: 0;
+  width: 80%;
+}
+
+.z1t a {
+  text-align: center;
+  font-size: 3vw;
+}
+
+
+
 .galeria2 {
-  width: 25%;
+  width: 100%;
   height: auto;
+  position: relative;
+  display: flex;
+  justify-content: right;
+}
+
+.z2 {
+  width: 80%;
+  height: auto;
+  cursor: pointer;
+  border-radius: 1%;
+  transition: 0.3s ease-in-out;
+}
+
+.z2:hover {
+  scale: 110%;
+  z-index: 1000;
+  
+}
+
+.galeria3 {
+  width: 50%;
+  height: auto;
+  position: relative;
+  display: flex;
+  float: right;
+  justify-content: left;
+  background-color: black;
+  height: 120vh;
+  padding: 2%;
+  align-items: center;
+}
+
+.z3 {
+  width: auto;
+  height: 90%;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  border-radius: 1%;
+  transition: 0.3s ease-in-out;
+}
+
+
+.z3:hover {
+  scale: 110%;
+  z-index: 1000;
+  
+}
+
+
+
+.z2t {
+  color: white;
+  position: absolute;
+  z-index: 1001;
+}
+
+.z3t {
+  color: white;
+  position: absolute;
+  z-index: 1001;
 }

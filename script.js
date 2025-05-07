@@ -1,6 +1,11 @@
+let menu;  // Zmienna menu dostępna globalnie
+
 document.addEventListener("DOMContentLoaded", () => {
   const tabs = document.querySelectorAll("[data-tab-target]");
   const tabContents = document.querySelectorAll("[data-tab-content]");
+
+  // Definiowanie menu w tym samym miejscu, co reszta kodu
+  menu = document.querySelector(".dropdown ul");
 
   tabs.forEach(tab => {
     tab.addEventListener("click", () => {
@@ -22,76 +27,31 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-
-
-
-
-// Pojawianie i znikanie tekstu dla <p> i <h1>
-let observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-      if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
-      } else {
-          entry.target.classList.remove("visible");
-      }
-  });
-}, { threshold: 0.3 });
-
-
-
-// Obserwowanie wszystkich <p> i <h1>
-document.querySelectorAll("p, h1").forEach(el => observer.observe(el));
-
-
-
-
-//Rozwijanie kontaktu//
-
 document.addEventListener("DOMContentLoaded", function () {
-  let activeImg = null;
-  let activeText = null;
+  const trybBtn = document.querySelector(".tryb");
+  const menuItems = document.querySelectorAll(".dropdown ul li");
 
-  document.querySelectorAll("img").forEach(img => {
-      img.addEventListener("click", function (event) {
-          const textClass = img.classList[0] + "t"; // Pobranie klasy + "t"
-          const textElement = document.querySelector("." + textClass);
-
-          if (textElement) {
-              // Usuwanie klasy active z poprzedniego obrazka i tekstu
-              if (activeImg && activeImg !== img) {
-                  activeImg.classList.remove("active");
-              }
-              if (activeText && activeText !== textElement) {
-                  activeText.classList.remove("active");
-              }
-
-              textElement.classList.toggle("active");
-              img.classList.toggle("active");
-              
-              // Aktualizacja aktywnych elementów
-              activeImg = img.classList.contains("active") ? img : null;
-              activeText = textElement.classList.contains("active") ? textElement : null;
-              
-              event.stopPropagation();
-          }
-      });
+  // Obsługa kliknięcia w ikonę trybu (otwieranie/zamykanie menu)
+  trybBtn.addEventListener("click", function (event) {
+    menu.classList.toggle("active");
+    trybBtn.classList.toggle("active");
+    event.stopPropagation(); // Zapobiega propagacji kliknięcia do document
   });
 
+  // Obsługa kliknięcia w elementy menu (zamykanie)
+  menuItems.forEach(item => {
+    item.addEventListener("click", function () {
+      menu.classList.remove("active");
+      trybBtn.classList.remove("active");
+    });
+  });
+
+  // Kliknięcie poza menu lub w .tryb zamyka je
   document.addEventListener("click", function (event) {
-      if (activeImg && activeText && !activeImg.contains(event.target) && !activeText.contains(event.target)) {
-          activeImg.classList.remove("active");
-          activeText.classList.remove("active");
-          activeImg = null;
-          activeText = null;
-      }
+    if (!menu.contains(event.target) && !trybBtn.contains(event.target)) {
+      menu.classList.remove("active");
+      trybBtn.classList.remove("active");
+    }
   });
 });
 
-
-const swiper = new Swiper('.swiper', {
-  loop: true,
-  navigation: {
-    nextEl: '.but-nxt',
-    prevEl: '.but-prev',
-  },
-});

@@ -1,39 +1,40 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const menu = document.querySelector(".dropdown ul");
-    const trybBtn = document.querySelector(".tryb");
-    const menuItems = document.querySelectorAll(".dropdown ul li");
-
-    // Obsługa kliknięcia w ikonę trybu (otwieranie/zamykanie menu)
-    trybBtn.addEventListener("click", function (event) {
-        menu.classList.toggle("active");
-        trybBtn.classList.toggle("active");
-        event.stopPropagation(); // Zapobiega propagacji kliknięcia do document
-    });
-
-    // Obsługa kliknięcia w elementy menu (zamykanie)
-    menuItems.forEach(item => {
-        item.addEventListener("click", function () {
-            menu.classList.remove("active");
-            trybBtn.classList.remove("active");
-        });
-    });
-
-    // Kliknięcie poza menu lub w .tryb zamyka je
-    document.addEventListener("click", function (event) {
-        if (!menu.contains(event.target) && !trybBtn.contains(event.target)) {
-            menu.classList.remove("active");
-            trybBtn.classList.remove("active");
+// Obserwator dla h1
+let observerH1 = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      const menu = document.querySelector(".menu");
+  
+      if (entry.isIntersecting) {
+        // Dodajemy klasę "visible" do h1
+        entry.target.classList.add("visible");
+  
+        // Dodajemy klasę "white" do menu tylko wtedy, gdy jeszcze jej nie ma
+        if (menu && !menu.classList.contains("white")) {
+          menu.classList.add("white");
         }
+      } else {
+        // Usuwamy klasę "visible" z h1, ale nie z menu
+        entry.target.classList.remove("visible");
+      }
     });
-});
-
-
-//Przewijanie do kolejnej sekcji//
-
-document.getElementById("scrollButton").addEventListener("click", function () {
-  const firstSection = document.querySelector(".sekcja1"); // Pobierz pierwszą sekcję
-
-  if (firstSection) {
-      firstSection.scrollIntoView({ behavior: "smooth" }); // Przewiń do niej
-  }
-});
+  }, { threshold: 0.9 });
+  
+  // Obserwator dla headtt
+  let observerHeadtt = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      const menu = document.querySelector(".menu");
+  
+      if (entry.isIntersecting) {
+        // Usuwamy klasę "white" z menu, gdy headtt stanie się widoczny
+        if (menu && menu.classList.contains("white")) {
+          menu.classList.remove("white");
+        }
+      }
+    });
+  }, { threshold: 0.9 });
+  
+  // Obserwowanie h1
+  document.querySelectorAll("h1").forEach(el => observerH1.observe(el));
+  
+  // Obserwowanie headtt
+  document.querySelectorAll(".headtt").forEach(el => observerHeadtt.observe(el));
+  

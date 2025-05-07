@@ -1,29 +1,36 @@
-let menu;  // Zmienna menu dostępna globalnie
+document.addEventListener('DOMContentLoaded', function() {
+  // Pobierz wszystkie zakładki
+  const tabs = document.querySelectorAll('.tab');
+  
+  // Funkcja zmieniająca aktywną zakładkę
+  function setActiveTab(clickedTab) {
+    // Usuń klasę active ze WSZYSTKICH zakładek (w tym "Strony głównej")
+    tabs.forEach(tab => tab.classList.remove('active'));
+    
+    // Dodaj klasę active tylko do klikniętej zakładki
+    clickedTab.classList.add('active');
+    
+    // Zapisz w localStorage (opcjonalne)
+    localStorage.setItem('activeTab', clickedTab.getAttribute('href'));
+  }
 
-document.addEventListener("DOMContentLoaded", () => {
-  const tabs = document.querySelectorAll("[data-tab-target]");
-  const tabContents = document.querySelectorAll("[data-tab-content]");
-
-  // Definiowanie menu w tym samym miejscu, co reszta kodu
-  menu = document.querySelector(".dropdown ul");
-
+  // Obsługa kliknięcia w zakładkę
   tabs.forEach(tab => {
-    tab.addEventListener("click", () => {
-      const target = document.querySelector(tab.dataset.tabTarget);
-
-      // Usuwanie aktywnych klas
-      tabContents.forEach(tabContent => tabContent.classList.remove("active"));
-      tabs.forEach(t => t.classList.remove("active"));
-
-      // Dodanie aktywnych klas
-      tab.classList.add("active");
-      target.classList.add("active");
-
-      // Poczekaj na aktualizację DOM, a potem przewiń na górę
-      requestAnimationFrame(() => {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      });
+    tab.addEventListener('click', function(e) {
+      // e.preventDefault(); // Odkomentuj dla SPA (bez przeładowania strony)
+      setActiveTab(this);
     });
+  });
+
+  // Przywróć aktywną zakładkę po przeładowaniu strony
+  const savedTab = localStorage.getItem('activeTab');
+  const currentPath = window.location.pathname;
+  
+  tabs.forEach(tab => {
+    const tabHref = tab.getAttribute('href');
+    if ((savedTab && tabHref === savedTab) || (!savedTab && tabHref === currentPath)) {
+      setActiveTab(tab);
+    }
   });
 });
 
@@ -55,3 +62,36 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+
+document.addEventListener('DOMContentLoaded', function() {
+  const tryb = document.querySelector('.tryb');
+  const rozwijaneMenu = document.querySelector('.rozwijane-menu');
+  const body = document.body;
+
+  tryb.addEventListener('click', function(e) {
+    e.preventDefault();
+    
+    // Toggle klas active
+    this.classList.toggle('active');
+    rozwijaneMenu.classList.toggle('active');
+    
+    // Blokada scrolla gdy menu jest otwarte
+    if (this.classList.contains('active')) {
+      body.style.overflow = 'hidden';
+      rozwijaneMenu.style.height = '100vh';
+    } else {
+      body.style.overflow = '';
+      rozwijaneMenu.style.height = '';
+    }
+  });
+
+  // Zamknij menu po kliknięciu na link
+  const menuLinks = document.querySelectorAll('.rozwijane-menu .tab');
+  menuLinks.forEach(link => {
+    link.addEventListener('click', function() {
+      tryb.classList.remove('active');
+      rozwijaneMenu.classList.remove('active');
+      body.style.overflow = '';
+    });
+  });
+});

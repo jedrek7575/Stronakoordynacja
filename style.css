@@ -292,6 +292,11 @@ text-decoration: none;
   position: relative;
   z-index: 2;
   float: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5%;
 }
 
 .bio {
@@ -302,12 +307,41 @@ text-decoration: none;
   font-weight: 500;
   font-style: normal;
   opacity: 0;
-  margin-top: 10%;
+
   transition: 0.7s ease-in-out;
+
 }
 
 .bio.visible {
   opacity: 1;
+}
+
+.dolacz {
+  width: 45%;
+  height: 10%;
+  border-radius: 30px;
+  transition: 0.3s ease-in-out;
+  border: 3px solid;
+  border-color: black;
+  background-color: aliceblue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+}
+
+.dolacz:hover {
+  transform: scale(120%);
+  background-color: rgb(255, 180, 180);
+}
+
+.dolacza {
+  font-size: 2vw;
+  text-decoration: none;
+  list-style-type: none ;
+  color: black;
+  border: none;
+  
 }
 
 .galeria {
@@ -649,7 +683,7 @@ text-decoration: none;
 
   .sekcja1 {
     padding: 5%;
-    height: auto;
+    height: 100vh;
   }
 
   .bio {
